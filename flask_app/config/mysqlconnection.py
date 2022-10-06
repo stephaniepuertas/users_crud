@@ -1,6 +1,6 @@
 import pymysql.cursors
 
-
+# code to connect the database
 class MySQLConnection:
     def __init__(self, db):
         connection = pymysql.connect(

@@ -5,7 +5,6 @@ from flask import flash
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
 
-
 # links to database
 DATABASE = 'user_schema'
 
@@ -13,9 +12,14 @@ DATABASE = 'user_schema'
 class User:
     def __init__(self, data):
         self.id = data['id']
-        self.attribute = data['attribute']
+        self.first_name = data['first_name']
+        self.last_name = data['last_name']
+        self.email = data['email']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
+
+    def __repr__(self):
+        return f'<User: {self.first_name}>'
 
     # create
     @classmethod
