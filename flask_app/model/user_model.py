@@ -6,7 +6,7 @@ EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
 
 # links to database
-DATABASE = 'user_schema'
+DATABASE = 'users_schema'
 
 
 class User:
@@ -24,10 +24,23 @@ class User:
     # create
     @classmethod
     def save(cls, data):
-        query = 'INSERT INTO users (column1, column2, column3) VALUES (%(column1)s, %(column2)s, %(column3)s);'
+        # edit and change column into the name of what your columns are in your table
+        # values come from the form in the template 
+        query = 'INSERT INTO users (first_name, last_name, email) VALUES (%(first_name)s, %(last_name)s, %(email)s);'
         user_id = connectToMySQL(DATABASE).query_db(query, data)
         print(f'Created: <User {user_id}>')
         return user_id
+
+
+    # update one by id
+    @classmethod
+    def find_by_id_and_update(cls, data):
+        query = 'UPDATE users SET first_name = %(first_name)s, last_name = %(last_name)s, email = %(email)s WHERE id = %(id)s;'
+        connectToMySQL(DATABASE).query_db(query, data)
+        print(f'Updated: <User {data["id"]}>')
+        return True
+
+
 
     # find all (no data needed)
     @classmethod
@@ -53,7 +66,7 @@ class User:
     # update one by id
     @classmethod
     def find_by_id_and_update(cls, data):
-        query = 'UPDATE users SET column1 = %(column1)s, column2 = %(column2)s, column3 = %(column3)s WHERE id = %(id)s;'
+        query = 'UPDATE users SET first_name = %(first_name)s, last_name = %(last_name)s, email = %(email)s WHERE id = %(id)s;'
         connectToMySQL(DATABASE).query_db(query, data)
         print(f'Updated: <User {data["id"]}>')
         return True
